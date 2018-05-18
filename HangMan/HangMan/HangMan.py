@@ -75,7 +75,7 @@ score = Score(5)
 
 while game_on:
 
-    alphab = Alphabet()
+    alphabet = Alphabet()
     keyword = Keyword.pick()
     hiddenKeyword = Keyword.hide(keyword)
 
@@ -83,7 +83,7 @@ while game_on:
         print("Total score: " + str(score.total_score))
         print(str(score.current_score) + " mistakes to hang!")
         print(hiddenKeyword)
-        print(alphab.alphabet)
+        print(alphabet.alphabet)
         c = input("Pick a letter from the alphabet: ")
 
         if len(c) != 1: 
@@ -91,7 +91,7 @@ while game_on:
             print("You can pick only one letter!")
             continue
 
-        elif c in alphab.used_letters:
+        elif c in alphabet.used_letters:
             os.system('cls')
             print("You've already used this letter!")
             continue
@@ -106,8 +106,8 @@ while game_on:
                 score.decrease_current()
                 print("Wrong!")
 
-            alphab.alphabet = alphab.remove_letter(c)
-            alphab.update_used(c)
+            alphabet.alphabet = alphabet.remove_letter(c)
+            alphabet.update_used(c)
 
 
     if hiddenKeyword.upper() == keyword.upper():
