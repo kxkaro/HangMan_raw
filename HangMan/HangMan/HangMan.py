@@ -1,5 +1,3 @@
-
-
 import random
 import string
 import re
@@ -57,8 +55,8 @@ class Alphabet:
 
 class Score:
     
-    def __init__(self):
-        self.current_score = 5
+    def __init__(self, max_trials):
+        self.current_score = max_trials
         self.total_score = 0
 
     def decrease_current(self):
@@ -73,7 +71,7 @@ class Score:
 
 #Main
 game_on = True
-score = Score()
+score = Score(5)
 
 while game_on:
 
@@ -83,7 +81,7 @@ while game_on:
 
     while score.current_score > 0 and hiddenKeyword.upper() != keyword.upper():
         print("Total score: " + str(score.total_score))
-        print("Tries: " + str(score.current_score))
+        print(str(score.current_score) + " mistakes to hang!")
         print(hiddenKeyword)
         print(alphab.alphabet)
         c = input("Pick a letter from the alphabet: ")
