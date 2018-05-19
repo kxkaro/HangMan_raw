@@ -21,16 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="alphabet.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="score.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="keyword.py">
+    <Compile Include="classes.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
