@@ -1,6 +1,10 @@
 import random
 import re
 import string
+import urllib.request
+from bs4 import BeautifulSoup
+
+
 
 class Keyword:
 
@@ -8,16 +12,41 @@ class Keyword:
         self.keyword = ""
         self.hidden = ""
 
+    @staticmethod
+    def initialize_list():
+        with urllib.request.urlopen("https://globalnews.ca/world/") as url:
+            html = url.read()
 
-    def assign_new(self):
+        soup = BeautifulSoup(html, "lxml")
 
-        keywords = ['abracadabra', 
-                 'nonsense', 
-                 'gamification', 
-                 'extraordinary', 
-                 'this game is stupid']
+        # kill all script and style elements
+        for script in soup(["script", "style"]):
+            script.extract()    # rip it out
 
-        self.keyword = keywords[random.randint(0, len(keywords)-1)].upper()
+        # get text
+        text = soup.get_text()
+
+        # break into lines and remove leading and trailing space on each
+        lines = (line.strip() for line in text.splitlines())
+
+        # break multi-headlines into a line each
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        # drop blank lines
+        text = '\n'.join(chunk for chunk in chunks if chunk)
+
+        keywords = text[692:2500].split("World\n")
+        
+        for k in keywords:
+            for c in k:
+                if c.upper() not in (string.ascii_uppercase+" "):
+                    k = k.replace(c, "")
+
+        return keywords
+
+
+    def assign_new(self, keywords_list):
+
+        self.keyword = keywords_list[random.randint(0, len(keywords_list)-1)].upper()
 
         self.hidden = self.keyword
 

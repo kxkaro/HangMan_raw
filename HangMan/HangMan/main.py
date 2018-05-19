@@ -1,15 +1,17 @@
 import os
-import classes as cl
+import classes as cls
 
-# Main
-keyword = cl.Keyword()
-alphabet = cl.Alphabet()
-score = cl.Score(5)
+
+keywords = cls.Keyword.initialize_list()
+#keywords = ['abracadabra', 'nonsense', 'gamification', 'extraordinary', 'this game is stupid']
+keyword = cls.Keyword()
+alphabet = cls.Alphabet()
+score = cls.Score(5)
 game_on = True
 
 while game_on:
 
-    keyword.assign_new()
+    keyword.assign_new(keywords)
     alphabet.reset()
 
     while score.current_score > 0 and keyword.hidden != keyword.keyword:
