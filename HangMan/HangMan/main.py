@@ -1,12 +1,13 @@
 import os
 import classes as cls
 
+#if cls.Keyword.keywords is None:
+cls.Keyword.initialize_list()
 
-keywords = cls.Keyword.initialize_list()
-#keywords = ['abracadabra', 'nonsense', 'gamification', 'extraordinary', 'this game is stupid']
+keywords = cls.Keyword.keywords_list
 keyword = cls.Keyword()
 alphabet = cls.Alphabet()
-score = cls.Score(5)
+score = cls.Score(3)
 game_on = True
 
 while game_on:
@@ -48,8 +49,9 @@ while game_on:
         os.system('cls')
         #score.increase_total(score.current_score)
         score.update()
-        
-        print("You won! Next round!")
+
+        input(keyword.keyword + "\n\nGood job! Next round!")
+        os.system('cls')
 
     elif score.current_score == 0:
         print("Game over!")

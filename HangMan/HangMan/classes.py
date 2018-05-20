@@ -5,48 +5,70 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 
-
-class Keyword:
+class Keyword():
 
     def __init__(self):
+        self.keywords_list = None
         self.keyword = ""
         self.hidden = ""
+    
 
-    @staticmethod
-    def initialize_list():
-        with urllib.request.urlopen("https://globalnews.ca/world/") as url:
-            html = url.read()
+    @classmethod
+    def initialize_list(cls, keywords_list = None):
+        if keywords_list is None:
+            with urllib.request.urlopen("https://globalnews.ca/world/") as url:
+                html = url.read()
 
-        soup = BeautifulSoup(html, "lxml")
+            soup = BeautifulSoup(html, "lxml")
 
-        # kill all script and style elements
-        for script in soup(["script", "style"]):
-            script.extract()    # rip it out
+            h3 = soup.find_all("h3")
+            keywords = []
 
-        # get text
-        text = soup.get_text()
+            # remove spaces in the beginning of headlines and special characters not available in Alphabet()
+            for i in range(11, 31):
+                for c in h3[i].text:
+                    if c.upper() in string.ascii_uppercase:
+                        index = h3[i].text.find(c)
+                        element = h3[i].text[index:].replace("\t", "").replace("\n", "")
+                        
+                        for c in element:
+                            if c.upper() not in (string.ascii_uppercase + " "):
+                                element.replace(c, "")
+                        keywords.append(element)
 
-        # break into lines and remove leading and trailing space on each
-        lines = (line.strip() for line in text.splitlines())
+                        break
 
-        # break multi-headlines into a line each
-        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-        # drop blank lines
-        text = '\n'.join(chunk for chunk in chunks if chunk)
+            ## kill all script and style elements
+            #for script in soup(["script", "style"]):
+            #    script.extract()    # rip it out
+            #
+            ## get text
+            #text = soup.get_text()
+            #
+            ## break into lines and remove leading and trailing space on each
+            #lines = (line.strip() for line in text.splitlines())
+            #
+            ## break multi-headlines into a line each
+            #chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+            ## drop blank lines
+            #text = '\n'.join(chunk for chunk in chunks if chunk)
 
-        keywords = text[692:2500].split("World\n")
-        
-        for k in keywords:
-            for c in k:
-                if c.upper() not in (string.ascii_uppercase+" "):
-                    k = k.replace(c, "")
+            #keywords = text[692:2500].split("World\n")
+            #
+            #for k in keywords:
+            #    for c in k:
+            #        if c.upper() not in (string.ascii_uppercase+" "):
+            #            k = k.replace(c, "")
+            #
+            
+            cls.keywords_list = keywords
 
-        return keywords
+        else: cls.keywords_list = keywords_list
 
 
-    def assign_new(self, keywords_list):
+    def assign_new(self, keywords):
 
-        self.keyword = keywords_list[random.randint(0, len(keywords_list)-1)].upper()
+        self.keyword = keywords[random.randint(0, len(keywords)-1)].upper()
 
         self.hidden = self.keyword
 
@@ -78,6 +100,7 @@ class Alphabet:
     def update(self, c):
         self.available = self.available.replace(c.upper() + " ", "")
         self.used = self.used + c
+
 
 class Score:
     
