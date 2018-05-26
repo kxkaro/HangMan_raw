@@ -21,13 +21,24 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="cls\score.py" />
+    <Compile Include="cls\alphabet.py" />
+    <Compile Include="tests\test_score.py" />
+    <Compile Include="tests\test_keyword.py" />
+    <Compile Include="tests\test_alphabet.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="classes.py">
+    <Compile Include="cls\keyword.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="C:\Users\nlkakra1\source\repos\HangMan_raw\HangMan\HangMan\cls\" />
+    <Folder Include="C:\Users\nlkakra1\source\repos\HangMan_raw\HangMan\HangMan\tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

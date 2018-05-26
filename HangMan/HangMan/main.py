@@ -1,13 +1,16 @@
-import os
-import classes as cls
+import os 
+from cls.keyword import *
+from cls.alphabet import *
+from cls.score import *
+
 
 #if cls.Keyword.keywords is None:
-cls.Keyword.initialize_list()
+Keyword.initialize_list()
 
-keywords = cls.Keyword.keywords_list
-keyword = cls.Keyword()
-alphabet = cls.Alphabet()
-score = cls.Score(3)
+keywords = Keyword.keywords_list
+keyword = Keyword()
+alphabet = Alphabet()
+score = Score(3)
 game_on = True
 
 while game_on:
@@ -21,19 +24,17 @@ while game_on:
         print(keyword.hidden)
         print(alphabet.available)
         c = input("Pick a letter from the alphabet: ")
+        os.system('cls')
 
         if len(c) != 1: 
-            os.system('cls')
             print("You can pick only one letter!")
             continue
 
         elif c in alphabet.used:
-            os.system('cls')
             print("You've already used this letter!")
             continue
 
         else:
-            os.system('cls')
             if c.upper() in keyword.keyword: 
                 keyword.update(c)
                 print("Well done!")
@@ -47,7 +48,6 @@ while game_on:
 
     if keyword.hidden == keyword.keyword:
         os.system('cls')
-        #score.increase_total(score.current_score)
         score.update()
 
         input(keyword.keyword + "\n\nGood job! Next round!")
